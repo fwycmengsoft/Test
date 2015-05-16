@@ -1,0 +1,63 @@
+NSString 转换成NSData 对象 
+      NSData* xmlData = [@"testdata" dataUsingEncoding:NSUTF8StringEncoding]; 
+   
+   NSData 转换成NSString对象 
+   NSData * data; 
+       NSString *result = [[NSString alloc] initWithData:data  encoding:NSUTF8StringEncoding]; 
+
+
+one
+test
+／／／／／／／／／／／／／／／／／／／／／／
+NSData 转换成char* 
+NSData *data; 
+char *test=[data bytes]; 
+
+
+char* 转换成NSData对象 
+byte* tempData = malloc(sizeof(byte)*16); 
+NSData *content=[NSData dataWithBytes:tempData length:16];
+ 
+int --> NSData 
+int someInt = 1;
+NSString *aString = [NSString stringWithFormat:@"%d",someInt];
+NSData *someData = [aString dataUsingEncoding:NSUTF8StringEncoding];
+[someData writeToFile:[documentsDirectory stringByAppendingString:@"someFile"] atomically:YES];
+
+
+
+NSData --> int
+
+NSData* someData = [NSData dataWithContentsOfFile:[documentsDirectory stringByAppendingString:@"someFile"］;
+NSString *aString = ［NSString alloc] initWithData:someData encoding:NSUTF8StringEncoding];
+int someInt = [aString intValue];
+typedef struct _INT{
+int t1;
+int t2;
+}INT_STRUCT;
+typedef struct _STRING{
+NSString *st1;
+NSString *st2;
+UIImage *image;
+}STRING_STRUCT;
+//初始化两个变量
+INT_STRUCT theInt = {2,5};
+STRING_STRUCT theString = {@"string1",@"string2",[UIImage imageNamed:@"icon57.png"]};
+//将这两个变量添加到data中，他们现在是二进制
+NSMutableData *theData = [NSMutableData data];
+[theData appendBytes:&theInt length:sizeof(INT_STRUCT)];
+[theData appendBytes:&theString length:sizeof(STRING_STRUCT)];
+//保存到你的路径，可以不需要后缀名
+[theData writeToFile:@"mySave" atomically:YES];
+
+//读取
+INT_STRUCT newInt;
+STRING_STRUCT newString;
+NSMutableData *newData = [NSData dataWithContentsOfFile:@"mySave"];
+
+//按地址赋值，注意range的范围
+[newData getBytes:&newInt range:NSMakeRange(0,sizeof(INT_STRUCT))];
+[newData getBytes:&newString range:NSMakeRange(sizeof(INT_STRUCT),sizeof(INT_STRUCT)+sizeof(STRING_STRUCT))];
+NSLog(@"newInt.t1===%d",newInt.t1);
+NSLog(@"newString.image===%@",newString.image);
+NSLog(@"theString.image===%@",theString.image);
