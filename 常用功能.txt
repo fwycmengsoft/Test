@@ -5,9 +5,9 @@ NSString 转换成NSData 对象
    NSData * data; 
        NSString *result = [[NSString alloc] initWithData:data  encoding:NSUTF8StringEncoding]; 
 
-
-one
+／／／／／／／／／／／／／／／
 test
+
 ／／／／／／／／／／／／／／／／／／／／／／
 NSData 转换成char* 
 NSData *data; 
